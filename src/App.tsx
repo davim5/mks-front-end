@@ -21,7 +21,7 @@ export interface IProduct {
 interface CartContextType {
   products: IProduct[];
   totalPrice: number;
-  addCart?: (product:IProduct) => void;
+  addCart: (product:IProduct) => void;
 }
 
 interface CartContextProps {
@@ -45,14 +45,8 @@ function reducer( state:CartContextType, action:any ) {
 export const CartContext = createContext({} as CartContextType)
 
 export function App() {
-  const [cart, dispatch] = useReducer(reducer, {
-    products:[],
-    totalPrice:0,
-});
 
-console.log(cart);
-
-const addCartAction = (product:IProduct) => {
+  const addCartAction = (product:IProduct) => {
     console.log('adicionar ao carrinho');
     dispatch({
       type: 'ADD_PRODUCT_TO_CART',
@@ -62,6 +56,15 @@ const addCartAction = (product:IProduct) => {
       }
     });
   }
+
+  const [cart, dispatch] = useReducer(reducer, {
+    products:[],
+    totalPrice:0,
+    addCart: addCartAction
+});
+
+console.log(cart);
+
 
 
   return (
